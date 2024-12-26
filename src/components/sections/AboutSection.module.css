@@ -1,0 +1,9 @@
+.aboutBoxContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+}
+.image {
+  align-self: center;
+}

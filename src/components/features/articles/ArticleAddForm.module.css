@@ -1,0 +1,14 @@
+.addForm label,
+.addForm input {
+  display: block;
+  margin-bottom: 10px;
+}
+.addForm label {
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.submitBtn {
+  margin-top: 10px;
+}
