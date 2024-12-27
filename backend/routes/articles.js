@@ -5,13 +5,17 @@ import { isValidText, isValidImageUrl } from "../util/validation.js";
 const router = Router();
 
 router.post("/articles", async (req, res, next) => {
-  const data = req.body;
+  const data = req.body.article;
   let errors = {};
 
+  console.log("Dodawanie artykułu");
+  console.log(data.title);
   console.log(data);
 
+  console.log("Walidacja danych");
   // validate article >= 2 chars
   if (!isValidText(data.title, 2)) {
+    console.log("Tytuł artykułu powinien mieć co najmniej 2 znaki");
     errors.title = "Tytuł artykułu powinien mieć co najmniej 2 znaki.";
   } else {
     console.log("tu bedzie sprawdzenie czy taki artykul juz instnieje");
@@ -28,18 +32,20 @@ router.post("/articles", async (req, res, next) => {
   }
 
   // banner url validation
-  if (!isValidImageUrl(data.banner_url)) {
+  if (!isValidImageUrl(data.bannerUrl)) {
+    console.log("Niepoprawny adres URL.");
     errors.banner_url = "Niepoprawny adres URL.";
   }
 
   // content validation >= 100 chars
   if (!isValidText(data.content, 100)) {
+    console.log("za krotki artykul");
     errors.content = "Treść artykułu powinna mieć co najmniej 100 znaków.";
   }
 
   // validation errors
   if (Object.keys(errors).length > 0) {
-    console.log("wyspily bledy walidacji");
+    console.log("Wystapily bledy walidacji");
     return res.status(422).json({
       message: "Dodawanie artykułu nie powiodło się z powodu błędów walidacji.",
       errors,

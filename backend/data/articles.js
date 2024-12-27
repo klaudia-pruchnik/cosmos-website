@@ -7,8 +7,8 @@ async function add(article, pool) {
         article.title,
         article.subtitle,
         article.content,
-        article.banner_url,
-        article.user_id,
+        article.bannerUrl,
+        article.userId,
       ]
     );
     console.log("result article");

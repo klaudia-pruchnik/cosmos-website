@@ -28,7 +28,7 @@ import classes from "./ClassicCKEditor.module.css";
 const LICENSE_KEY =
   "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3MzU4NjIzOTksImp0aSI6ImIyMzU4ZWM3LTAyYjItNGUyNi05NDkxLTZkYjA0NmNhZDljZiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImIxNjc4NTk3In0.Z4Nfr_sPyy6nFvDVe8PVSc6EqdVFJ6wYEKSIGucg3rDcL8kcbhSmEOD4BCT0Ralhj3t7akmMnUl4vCqch49KRg";
 
-export default function ClassicCKEditor() {
+export default function ClassicCKEditor({ onChange }) {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
@@ -165,7 +165,14 @@ export default function ClassicCKEditor() {
         <div>
           <div ref={editorRef}>
             {editorConfig && (
-              <CKEditor editor={ClassicEditor} config={editorConfig} />
+              <CKEditor
+                editor={ClassicEditor}
+                config={editorConfig}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  onChange(data);
+                }}
+              />
             )}
           </div>
         </div>
