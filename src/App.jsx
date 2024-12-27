@@ -41,7 +41,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { path: "add", element: <AddNewArticle /> },
+          { path: "new", element: <AddNewArticle /> },
         ],
       },
       { path: "auth", element: <AuthPage />, action: authAction },
