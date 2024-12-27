@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 import HomePage from "./pages/Home.jsx";
 import AboutPage from "./pages/About.jsx";
@@ -23,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "articles",
         children: [
+          {
+            index: true,
+            element: <Navigate to="/#section-articles" />,
+          },
           {
             path: ":articleId",
             id: "article",

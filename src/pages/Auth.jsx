@@ -57,7 +57,7 @@ export async function action({ request }) {
 
   // sign up password confirmation
   if (mode === "signup" && authData.password !== authData.password2) {
-    return new Response(
+    throw new Response(
       JSON.stringify({ errors: { password2: "Hasła muszą być identyczne." } }),
       {
         status: 422,
