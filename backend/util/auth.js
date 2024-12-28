@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { NotAuthError } from "./errors.js";
 import dotenv from "dotenv";
 
+import { get as getUserByUsername } from "../data/user.js";
+
 dotenv.config();
 
 const { compare } = bcrypt;
@@ -59,9 +61,28 @@ function checkAuthMiddleware(req, res, next) {
   next(); // next middleware
 }
 
+// Middleware for checking if user is admin
+async function checkAdminMiddleware(req, res, next) {
+  if (!req.token) {
+    return next(new NotAuthError("Not authenticated."));
+  }
+
+  const username = req.token.username;
+  try {
+    const user = await getUserByUsername(username, req.app.locals.pool);
+    if (!user || !user.is_admin) {
+      return next(new NotAuthError("Not authorized."));
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
 export {
   createJSONToken,
   validateJSONToken,
   isValidPassword,
   checkAuthMiddleware,
+  checkAdminMiddleware,
 };
