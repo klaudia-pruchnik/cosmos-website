@@ -10,19 +10,19 @@ export function AuthProvider({ children }) {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = getAuthToken();
+  useEffect(() => {
+    const token = getAuthToken();
 
-  //   if (token === "EXPIRED") {
-  //     handleLogout();
-  //     return;
-  //   }
+    if (token === "EXPIRED") {
+      handleLogout();
+      return;
+    }
 
-  //   if (token) {
-  //     setToken(token);
-  //     fetchUserData(token);
-  //   }
-  // }, []);
+    if (token) {
+      setToken(token);
+      fetchUserData(token);
+    }
+  }, []);
 
   async function fetchUserData(token) {
     try {

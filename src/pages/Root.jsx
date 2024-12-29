@@ -47,15 +47,15 @@ function RootLayout() {
   const showFooter = !pathname.startsWith("/auth");
 
   return (
-    // <AuthProvider>
-    <>
-      <MainNavigation />
-      <main>
-        <Outlet />
-      </main>
-      {showFooter && <Footer />}
-    </>
-    // </AuthProvider>
+    <AuthProvider>
+      <>
+        <MainNavigation />
+        <main>
+          <Outlet />
+        </main>
+        {showFooter && <Footer />}
+      </>
+    </AuthProvider>
   );
 }
 

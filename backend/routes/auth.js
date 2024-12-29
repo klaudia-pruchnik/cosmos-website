@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { add, get } from "../data/user.js";
-import { createJSONToken, isValidPassword } from "../util/auth.js";
+import {
+  createJSONToken,
+  isValidPassword,
+  checkAuthMiddleware,
+} from "../util/auth.js";
 import { isValidText } from "../util/validation.js";
 
 const router = Router();
