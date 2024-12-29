@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import MainNavigation from "../components/layout/MainNavigation";
 import Footer from "../components/layout/Footer";
 import { getTokenDuration } from "../util/auth";
+import { AuthProvider } from "../context/AuthContext";
 
 function RootLayout() {
   const { hash, pathname } = useLocation();
@@ -46,6 +47,7 @@ function RootLayout() {
   const showFooter = !pathname.startsWith("/auth");
 
   return (
+    // <AuthProvider>
     <>
       <MainNavigation />
       <main>
@@ -53,6 +55,7 @@ function RootLayout() {
       </main>
       {showFooter && <Footer />}
     </>
+    // </AuthProvider>
   );
 }
 

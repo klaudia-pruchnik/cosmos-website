@@ -88,4 +88,25 @@ router.post("/login", async (req, res) => {
   res.json({ token });
 });
 
+router.get("/user", checkAuthMiddleware, async (req, res) => {
+  console.log("getting user");
+  const username = req.token.username;
+
+  try {
+    console.log("pobieram usera");
+    const user = await get(username, req.app.locals.pool);
+
+    console.log("user", user);
+    if (!user) {
+      return res.status(404).json({ message: "Nie znaleziono użytkownika." });
+    }
+
+    delete user.password;
+    res.json(user);
+  } catch (error) {
+    console.error("Błąd pobierania użytkownika:", error);
+    res.status(500).json({ message: "Wystąpił błąd." });
+  }
+});
+
 export default router;

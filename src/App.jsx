@@ -11,6 +11,7 @@ import RootLayout from "./pages/Root.jsx";
 import ArticlePage from "./pages/Article.jsx";
 import AuthPage from "./pages/Auth.jsx";
 import AddNewArticle from "./pages/AddNewArticle.jsx";
+import Test from "./components/Test.jsx";
 
 import { action as authAction } from "./pages/Auth";
 import { checkAuthLoader, tokenLoader } from "./util/auth";
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
       },
       { path: "auth", element: <AuthPage />, action: authAction },
       { path: "logout", action: logoutAction },
+      { path: "/test", element: <Test /> },
     ],
   },
 ]);
