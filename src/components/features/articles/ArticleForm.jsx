@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import classes from "./ArticleForm.module.css";
 import ClassicCKEditor from "../ClassicCKEditor.jsx";
+import { UserContext } from "../../../context/UserContext";
 
 export default function ArticleForm({ onSubmit }) {
   const [content, setContent] = useState(""); // CKEditor content
+  const { user } = useContext(UserContext);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -12,7 +14,7 @@ export default function ArticleForm({ onSubmit }) {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     data.content = content;
-    data.userId = 1; // TODO: get user id from auth context
+    data.userId = user.id;
 
     onSubmit(data);
   }

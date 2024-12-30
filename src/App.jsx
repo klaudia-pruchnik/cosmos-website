@@ -18,6 +18,7 @@ import { checkAuthLoader, tokenLoader } from "./util/auth";
 import { action as logoutAction } from "./pages/Logout";
 
 import { queryClient } from "./util/http";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,14 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { path: "new", element: <AddNewArticle /> },
+          {
+            path: "new",
+            element: (
+              <ProtectedRoute adminOnly={true}>
+                <AddNewArticle />
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
       { path: "auth", element: <AuthPage />, action: authAction },

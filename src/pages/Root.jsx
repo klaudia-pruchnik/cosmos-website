@@ -10,24 +10,7 @@ import MainNavigation from "../components/layout/MainNavigation";
 import Footer from "../components/layout/Footer";
 import { getTokenDuration } from "../util/auth";
 import { UserContext } from "../context/UserContext";
-
-async function fetchUserData(token) {
-  try {
-    const response = await fetch("http://localhost:8080/user", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      throw new Error("Błąd podczas pobierania danych użytkownika.");
-    }
-
-    const userData = await response.json();
-    return userData;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
+import { fetchUserData } from "../util/http";
 
 function RootLayout() {
   const { hash, pathname } = useLocation();
@@ -76,23 +59,11 @@ function RootLayout() {
     }, tokenDuration);
 
     return () => clearTimeout(logoutTimer);
-    // }, [token, submit, updateUser, clearUser]);
   }, [token, submit]);
 
   const showFooter = !pathname.startsWith("/auth");
 
   return (
-<<<<<<< HEAD
-    <AuthProvider>
-      <>
-        <MainNavigation />
-        <main>
-          <Outlet />
-        </main>
-        {showFooter && <Footer />}
-      </>
-    </AuthProvider>
-=======
     <>
       <MainNavigation />
       <main>
@@ -100,7 +71,6 @@ function RootLayout() {
       </main>
       {showFooter && <Footer />}
     </>
->>>>>>> 8d32c08 (userContext)
   );
 }
 

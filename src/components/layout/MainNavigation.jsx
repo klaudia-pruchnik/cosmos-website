@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
+import { UserContext } from "../../context/UserContext";
 
 export default function MainNavigation() {
   const token = useRouteLoaderData("root");
+  const { isAdmin } = useContext(UserContext);
 
   return (
     <header>
@@ -53,6 +56,18 @@ export default function MainNavigation() {
                 Kontakt
               </NavLink>
             </li>
+            {isAdmin && (
+              <li className={`nav-item ${classes.mainNavItem}`}>
+                <NavLink
+                  className={`nav-link ${classes.mainNavLink} ${({
+                    isActive,
+                  }) => (isActive ? classes.active : undefined)}}`}
+                  to="/articles/new"
+                >
+                  Dodaj artykuł
+                </NavLink>
+              </li>
+            )}
             {!token && (
               <li className={`nav-item ${classes.mainNavItem}`}>
                 <NavLink
