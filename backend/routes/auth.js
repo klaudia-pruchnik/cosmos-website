@@ -68,23 +68,24 @@ router.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+  console.log("login", username, password);
+
   let user;
   try {
-    // gen user based on username
+    // get user based on username
     user = await get(username, req.app.locals.pool);
+
+    // if user not found or password is invalid
+    if (!user || !(await isValidPassword(password, user.password))) {
+      return res.status(422).json({
+        message: "Autentyfikacja nie powiodła się.",
+        errors: { credentials: "Błędna nazwa użytkownika lub hasło." },
+      });
+    }
   } catch (error) {
     return res
       .status(401)
       .json({ message: "Autentyfikacja nie powiodła się." });
-  }
-
-  // checking if password valid
-  const pwIsValid = await isValidPassword(password, user.password);
-  if (!pwIsValid) {
-    return res.status(422).json({
-      message: "Błędne dane logowania.",
-      errors: { credentials: "Błędna nazwa użytkownika lub hasło." },
-    });
   }
 
   // token JWT
