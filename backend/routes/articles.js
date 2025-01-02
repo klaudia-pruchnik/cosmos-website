@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add } from "../data/articles.js";
+import { add, getArticles } from "../data/articles.js";
 import { isValidText, isValidImageUrl } from "../util/validation.js";
 import { checkAuthMiddleware, checkAdminMiddleware } from "../util/auth.js";
 
@@ -26,7 +26,7 @@ router.post(
       console.log("tu bedzie sprawdzenie czy taki artykul juz instnieje");
       // try {
       //   console.log("sprawdzam czy istnieje");
-      //   const existingArticle = await get(data.title, req.app.locals.pool); // check if username exists
+      //   const existingArticle = await get(data.title, req.app.locals.pool);
       //   if (existingArticle) {
       //     errors.title = "Artykuł z takim tytułem już istnieje.";
       //   }
@@ -71,5 +71,25 @@ router.post(
     }
   }
 );
+
+router.get("/articles", async (req, res, next) => {
+  const limit = parseInt(req.query.limit) || 6;
+  const offset = parseInt(req.query.offset) || 0;
+
+  console.log("limit, offset", limit, offset);
+
+  try {
+    const articles = await getArticles(limit, offset, req.app.locals.pool);
+
+    console.log("articles", articles);
+    res.status(200).json({
+      articles,
+      hasMore: articles.length === limit,
+    });
+  } catch (error) {
+    console.log("error", error);
+    next(error);
+  }
+});
 
 export default router;

@@ -20,4 +20,17 @@ async function add(article, pool) {
   }
 }
 
-export { add };
+async function getArticles(limit, offset, pool) {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM articles ORDER BY created_at DESC LIMIT $1 OFFSET $2",
+      [limit, offset]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    throw error;
+  }
+}
+
+export { add, getArticles };
