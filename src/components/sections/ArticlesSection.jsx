@@ -42,7 +42,7 @@ export default function ArticlesSection() {
     content = (
       <div className="row">
         {articles.map((article) => (
-          <ArticleItem key={article.id} title={article.title} />
+          <ArticleItem key={article.id} article={article} />
         ))}
       </div>
     );

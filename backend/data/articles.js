@@ -33,4 +33,16 @@ async function getArticles(limit, offset, pool) {
   }
 }
 
-export { add, getArticles };
+async function getArticle(id, pool) {
+  try {
+    const result = await pool.query("SELECT * FROM articles WHERE id = $1", [
+      id,
+    ]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    throw error;
+  }
+}
+
+export { add, getArticles, getArticle };

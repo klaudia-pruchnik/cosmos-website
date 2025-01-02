@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, getArticles } from "../data/articles.js";
+import { add, getArticles, getArticle } from "../data/articles.js";
 import { isValidText, isValidImageUrl } from "../util/validation.js";
 import { checkAuthMiddleware, checkAdminMiddleware } from "../util/auth.js";
 
@@ -59,7 +59,6 @@ router.post(
     }
 
     try {
-      // add user to db
       const createdArticle = await add(data, req.app.locals.pool);
 
       res.status(201).json({
@@ -86,6 +85,22 @@ router.get("/articles", async (req, res, next) => {
       articles,
       hasMore: articles.length === limit,
     });
+  } catch (error) {
+    console.log("error", error);
+    next(error);
+  }
+});
+
+router.get("/articles/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  console.log("getting article with id", id);
+
+  try {
+    const article = await getArticle(id, req.app.locals.pool);
+
+    console.log("fetched article: ", article);
+    res.status(200).json(article);
   } catch (error) {
     console.log("error", error);
     next(error);
