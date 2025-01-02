@@ -99,6 +99,10 @@ router.get("/articles/:id", async (req, res, next) => {
   try {
     const article = await getArticle(id, req.app.locals.pool);
 
+    if (!article) {
+      return res.status(404).json({ message: "article not found" });
+    }
+
     console.log("fetched article: ", article);
     res.status(200).json(article);
   } catch (error) {

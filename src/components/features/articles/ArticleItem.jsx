@@ -8,10 +8,8 @@ export default function ArticleItem({ article }) {
       to={`/articles/${article.id}`}
       className={`col-lg-4 col-md-6 ${classes.boxContainer}`}
     >
-      {/* <div className={`col-lg-4 col-md-6 ${classes.boxContainer}`}> */}
       <div className={classes.boxImage}></div>
       <h4>{article.title}</h4>
-      {/* </div> */}
     </Link>
   );
 }

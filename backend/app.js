@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import pkg from "pg";
 import authRoutes from "./routes/auth.js";
 import articleRoutes from "./routes/articles.js";
+import userRoutes from "./routes/users.js";
 // import commentRoutes from "./routes/comments.js";
 import dotenv from "dotenv";
 
@@ -32,6 +33,7 @@ app.locals.pool = pool; // connection in multiple files
 // routes
 app.use(authRoutes);
 app.use(articleRoutes);
+app.use(userRoutes);
 // app.use("/comments", commentRoutes);
 
 // error handling

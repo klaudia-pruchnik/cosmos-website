@@ -30,6 +30,29 @@ export async function fetchArticles({ signal, limit, offset }) {
   return response.json();
 }
 
+export async function fetchArticle({ id, signal }) {
+  console.log("fetching article id", id);
+
+  const response = await fetch(`http://localhost:8080/articles/${id}`, {
+    signal,
+  });
+
+  console.log("response", response);
+
+  if (!response.ok) {
+    const error = new Error("An error occurred while fetching the article");
+    error.code = response.status;
+    error.info = await response.json();
+    console.log("error", error);
+    console.log("errors in fetch article");
+    throw error;
+  }
+
+  const articleList = await response.json();
+
+  return articleList[0];
+}
+
 export async function createNewArticle(articleData) {
   const token = getAuthToken();
 
@@ -71,6 +94,28 @@ export async function fetchUserData(token) {
 
     const userData = await response.json();
     return userData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function fetchUsernameById(id) {
+  try {
+    console.log("fetching username for id", id);
+
+    const response = await fetch(`http://localhost:8080/users/${id}/username`);
+
+    console.log("response", response);
+
+    if (!response.ok) {
+      throw new Error("Błąd podczas pobierania nazwy użytkownika.");
+    }
+
+    const data = await response.json();
+
+    console.log("data", data);
+    return data.username;
   } catch (error) {
     console.error(error);
     return null;

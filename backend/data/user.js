@@ -18,11 +18,16 @@ async function add(user, pool) {
   }
 }
 
-// get usr from username
-async function get(username, pool) {
+// get usr from field
+async function get(field = "username", value, pool) {
   try {
-    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
-      username,
+    const allowedFields = ["username", "id"];
+    if (!allowedFields.includes(field)) {
+      throw new Error("Invalid field");
+    }
+
+    const result = await pool.query(`SELECT * FROM users WHERE ${field} = $1`, [
+      value,
     ]);
     return result.rows[0];
   } catch (error) {
