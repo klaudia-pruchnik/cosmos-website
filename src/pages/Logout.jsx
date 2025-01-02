@@ -1,4 +1,6 @@
 import { redirect } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 export function action() {
   console.log("logout action");

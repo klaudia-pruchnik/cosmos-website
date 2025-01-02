@@ -16,9 +16,12 @@ export async function createNewArticle(articleData) {
   });
 
   if (!response.ok) {
+    const errorData = await response.json();
+    console.log(errorData);
     const error = new Error("Wystąpił błąd podczas dodawania artykułu.");
     error.code = response.status;
-    error.info = await response.json();
+    error.info = errorData;
+    console.log("error z http info", error.info);
     throw error;
   }
 

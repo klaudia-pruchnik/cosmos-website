@@ -10,11 +10,10 @@ import MainNavigation from "../components/layout/MainNavigation";
 import Footer from "../components/layout/Footer";
 import { getTokenDuration } from "../util/auth";
 import { UserContext } from "../context/UserContext";
-import { fetchUserData } from "../util/http";
 
 function RootLayout() {
   const { hash, pathname } = useLocation();
-  const { updateUser, clearUser, user } = useContext(UserContext);
+  const { user, fetchUser, loading, clearUser } = useContext(UserContext);
 
   const token = useLoaderData();
   const submit = useSubmit();
@@ -31,27 +30,43 @@ function RootLayout() {
 
   // token menagement and user data fetching
   useEffect(() => {
+    console.log("root token menagement and user data fetching.");
+
+    if (!token) {
+      clearUser();
+    }
+
     if (!token || user) {
+      console.log("no token or user");
+      console.log(user);
       return;
     }
 
+    console.log("checking if token is expired");
     if (token === "EXPIRED") {
       submit(null, { action: "/logout", method: "post" });
       return;
     }
 
     const tokenDuration = getTokenDuration();
-    console.log(tokenDuration);
+    console.log("token duration: ", tokenDuration);
 
+    console.log("fetching user data...");
     // fetch user data
-    (async () => {
-      const userData = await fetchUserData(token);
-      if (userData) {
-        updateUser(userData);
-      } else {
-        clearUser();
-      }
-    })();
+    fetchUser(token);
+
+    console.log("fetchUser");
+    console.log("fetched user: ", user);
+
+    // (async () => {
+    //   setLoading(true);
+    //   const userData = await fetchUserData(token);
+    //   if (userData) {
+    //     updateUser(userData);
+    //   } else {
+    //     clearUser();
+    //   }
+    // })();
 
     // logout after token expiration
     const logoutTimer = setTimeout(() => {
@@ -59,7 +74,7 @@ function RootLayout() {
     }, tokenDuration);
 
     return () => clearTimeout(logoutTimer);
-  }, [token, submit]);
+  }, [token, submit, user, fetchUser]);
 
   const showFooter = !pathname.startsWith("/auth");
 

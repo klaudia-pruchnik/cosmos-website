@@ -7,6 +7,8 @@ export default function MainNavigation() {
   const token = useRouteLoaderData("root");
   const { isAdmin } = useContext(UserContext);
 
+  console.log("MainNavigation admin", isAdmin);
+
   return (
     <header>
       <nav
@@ -56,7 +58,7 @@ export default function MainNavigation() {
                 Kontakt
               </NavLink>
             </li>
-            {isAdmin && (
+            {isAdmin && token && (
               <li className={`nav-item ${classes.mainNavItem}`}>
                 <NavLink
                   className={`nav-link ${classes.mainNavLink} ${({

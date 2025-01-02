@@ -29,18 +29,6 @@ export function tokenLoader() {
   return token;
 }
 
-export async function userTokenLoader() {
-  const token = getAuthToken();
-
-  try {
-    user = await fetchUserData(token);
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-  }
-
-  return { token, user };
-}
-
 export function checkAuthLoader() {
   const token = getAuthToken();
 

@@ -19,6 +19,7 @@ import { action as logoutAction } from "./pages/Logout";
 
 import { queryClient } from "./util/http";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+// import NotAuthorized from "./pages/NotAuthorized.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,13 +50,14 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: (
-              <ProtectedRoute adminOnly={true}>
+              <ProtectedRoute>
                 <AddNewArticle />
               </ProtectedRoute>
             ),
           },
         ],
       },
+      // { path: "not-authorized", element: <NotAuthorized /> },
       { path: "auth", element: <AuthPage />, action: authAction },
       { path: "logout", action: logoutAction },
     ],

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 // import { createNewArticle } from "../../util/http.js";
@@ -34,7 +34,18 @@ export default function AddNewArticle() {
       <h1>Nowy artykuł</h1>
       <ArticleForm onSubmit={handleSubmit} />
       {isPending && <p>Wysyłanie...</p>}
-      {isError && <p>{error.message}</p>}
+      {isError && (
+        <>
+          <p>{error.message}</p>
+          {error.info.errors && (
+            <ul>
+              {Object.entries(error.info.errors).map(([key, value]) => (
+                <li key={key}>{value}</li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
     </div>
   );
 }
