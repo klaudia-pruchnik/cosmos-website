@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import {
-  //   Link,
   redirect,
-  //   useNavigate,
   useParams,
   useSubmit,
   useNavigation,
@@ -16,7 +14,6 @@ import { UserContext } from "../context/UserContext";
 import ArticleForm from "../components/features/articles/ArticleForm";
 
 export default function AddNewArticle() {
-  //   const navigate = useNavigate();
   const { state } = useNavigation();
   const submit = useSubmit();
   const params = useParams();
