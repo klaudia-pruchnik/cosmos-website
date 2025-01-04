@@ -1,11 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 import ArticleTitleSection from "./../components/sections/ArticleTitleSection";
 import ArticleContent from "../components/sections/ArticleContent";
-import { fetchArticle, fetchUsernameById } from "../util/http";
+import { fetchArticle } from "../util/http";
+import { UserContext } from "../context/UserContext";
+
+import classes from "./Article.module.css";
 
 export default function Article() {
+  const { isAdmin } = useContext(UserContext);
+
   const params = useParams();
 
   console.log("params", params);
@@ -13,13 +19,7 @@ export default function Article() {
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["events", params.id],
-    queryFn: async ({ signal }) => {
-      const article = await fetchArticle({ signal, id: params.articleId });
-      console.log("article user_id", article.user_id);
-      const username = await fetchUsernameById(article.user_id);
-      console.log("username", username);
-      return { ...article, author: username };
-    },
+    queryFn: ({ signal }) => fetchArticle({ signal, id: params.articleId }),
   });
 
   let content;
@@ -43,7 +43,7 @@ export default function Article() {
     const formattedDate = new Date(data.created_at).toLocaleDateString(
       "pl-PL",
       {
-        dateStyle: "short",
+        dateStyle: "long",
       }
     );
 
@@ -57,6 +57,16 @@ export default function Article() {
           author={data.author}
           date={formattedDate}
         />
+
+        {isAdmin && (
+          <div className={`d-flex justify-content-end ${classes.actions}`}>
+            <button className="btn btn-outline-light my-3">Delete</button>
+            <Link to="edit" className="btn btn-outline-light my-3 mx-2">
+              Edit
+            </Link>
+          </div>
+        )}
+
         <ArticleContent content={data.content} />
       </>
     );

@@ -4,7 +4,7 @@ import classes from "./ArticleForm.module.css";
 import ClassicCKEditor from "../ClassicCKEditor.jsx";
 import { UserContext } from "../../../context/UserContext";
 
-export default function ArticleForm({ onSubmit }) {
+export default function ArticleForm({ inputData = null, onSubmit }) {
   const [content, setContent] = useState(""); // CKEditor content
   const { user } = useContext(UserContext);
 

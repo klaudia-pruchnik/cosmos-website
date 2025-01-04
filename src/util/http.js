@@ -82,6 +82,37 @@ export async function createNewArticle(articleData) {
   return article;
 }
 
+export async function updateArticle({ id, article }) {
+  const token = getAuthToken();
+
+  console.log("updateArticle id", id, article);
+
+  const response = await fetch(`http://localhost:8080/articles/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({ article }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log("response from http.js updateArticle", response);
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.log(errorData);
+    const error = new Error(
+      errorData.message || "Wystąpił błąd podczas edycji artykułu."
+    );
+    error.code = response.status;
+    error.info = errorData;
+    console.log("error z http info", error.info);
+    throw error;
+  }
+
+  return response.json();
+}
+
 export async function fetchUserData(token) {
   try {
     const response = await fetch("http://localhost:8080/user", {

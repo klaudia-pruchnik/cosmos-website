@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import pkg from "pg";
 import authRoutes from "./routes/auth.js";
 import articleRoutes from "./routes/articles.js";
-import userRoutes from "./routes/users.js";
 // import commentRoutes from "./routes/comments.js";
 import dotenv from "dotenv";
 
@@ -18,7 +17,7 @@ const PORT = 8080;
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
   next();
 });
@@ -33,7 +32,6 @@ app.locals.pool = pool; // connection in multiple files
 // routes
 app.use(authRoutes);
 app.use(articleRoutes);
-app.use(userRoutes);
 // app.use("/comments", commentRoutes);
 
 // error handling

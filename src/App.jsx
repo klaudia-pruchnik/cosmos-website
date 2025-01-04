@@ -12,10 +12,15 @@ import RootLayout from "./pages/Root.jsx";
 import ArticlePage from "./pages/Article.jsx";
 import AuthPage from "./pages/Auth.jsx";
 import AddNewArticle from "./pages/AddNewArticle.jsx";
+import EditEvent from "./pages/EditArticle.jsx";
 
 import { action as authAction } from "./pages/Auth";
-import { checkAuthLoader, tokenLoader } from "./util/auth";
+import { tokenLoader } from "./util/auth";
 import { action as logoutAction } from "./pages/Logout";
+import {
+  loader as editEventLoader,
+  action as editEventAction,
+} from "./pages/EditArticle";
 
 import { queryClient } from "./util/http";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -44,6 +49,16 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <ArticlePage />,
+              },
+              {
+                path: "edit",
+                element: (
+                  <ProtectedRoute>
+                    <EditEvent />
+                  </ProtectedRoute>
+                ),
+                loader: editEventLoader,
+                action: editEventAction,
               },
             ],
           },

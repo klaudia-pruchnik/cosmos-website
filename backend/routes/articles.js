@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, getArticles, getArticle } from "../data/articles.js";
+import { add, edit, getArticles, getArticle } from "../data/articles.js";
 import { isValidText, isValidImageUrl } from "../util/validation.js";
 import { checkAuthMiddleware, checkAdminMiddleware } from "../util/auth.js";
 
@@ -64,6 +64,66 @@ router.post(
       res.status(201).json({
         message: "Artykuł dodany do bazy.",
         article: createdArticle,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
+  "/articles/:id",
+  checkAuthMiddleware,
+  checkAdminMiddleware,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const data = req.body.article;
+    let errors = {};
+
+    console.log("Edytowanie artykułu");
+    console.log(data.title);
+    console.log(data);
+
+    if (!data) {
+      return res.status(400).json({ message: "Article is required" });
+    }
+
+    console.log("Walidacja danych");
+    // validate article >= 2 chars
+    if (!isValidText(data.title, 2)) {
+      console.log("Tytuł artykułu powinien mieć co najmniej 2 znaki");
+      errors.title = "Tytuł artykułu powinien mieć co najmniej 2 znaki.";
+    } else {
+      console.log("tu bedzie sprawdzenie czy taki artykul juz instnieje");
+    }
+
+    // banner url validation
+    if (!isValidImageUrl(data.bannerUrl)) {
+      console.log("Niepoprawny adres URL.");
+      errors.banner_url = "Niepoprawny adres URL.";
+    }
+
+    // content validation >= 100 chars
+    if (!isValidText(data.content, 100)) {
+      console.log("za krotki artykul");
+      errors.content = "Treść artykułu powinna mieć co najmniej 100 znaków.";
+    }
+
+    // validation errors
+    if (Object.keys(errors).length > 0) {
+      console.log("Wystapily bledy walidacji");
+      return res.status(422).json({
+        message: "Edycja artykułu nie powiodła się z powodu błędów walidacji.",
+        errors,
+      });
+    }
+
+    try {
+      const updatedArticle = await edit(data, req.app.locals.pool);
+
+      res.status(201).json({
+        message: "Artykuł został edytowany.",
+        article: updatedArticle,
       });
     } catch (error) {
       next(error);
