@@ -1,29 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import {
-  ClassicEditor,
-  Autosave,
-  BlockQuote,
-  Bold,
-  Essentials,
-  Heading,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  Paragraph,
-  SpecialCharacters,
-  Table,
-  TableCaption,
-  TableCellProperties,
-  TableColumnResize,
-  TableProperties,
-  TableToolbar,
-  Underline,
-} from "ckeditor5";
-import translations from "ckeditor5/translations/pl.js";
-import "ckeditor5/ckeditor5.css";
-import classes from "./ClassicCKEditor.module.css";
+import { CKEditor, useCKEditorCloud } from "@ckeditor/ckeditor5-react";
+import "./ClassicCKEditor.css";
 
 const LICENSE_KEY =
   "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjYxODg3OTksImp0aSI6IjhkYWE4ZDlhLTA2ZDItNDQ3OC05MThmLTYxOTdjNDZmMmRjMyIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiNTU5YmVmNzIifQ.a79MjSXAf5pL1xRhaxFcL3wQcKeXybwC2iFcGuoNn8oem-IJilA6zp6898z1sRXZafrN4wrusvFgSIFckdfdFA";
@@ -31,7 +8,9 @@ const LICENSE_KEY =
 export default function ClassicCKEditor({ onChange }) {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
+  const editorWordCountRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const cloud = useCKEditorCloud({ version: "44.1.0", translations: ["pl"] });
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -39,15 +18,51 @@ export default function ClassicCKEditor({ onChange }) {
     return () => setIsLayoutReady(false);
   }, []);
 
-  const { editorConfig } = useMemo(() => {
-    if (!isLayoutReady) {
+  const { ClassicEditor, editorConfig } = useMemo(() => {
+    if (cloud.status !== "success" || !isLayoutReady) {
       return {};
     }
 
+    const {
+      ClassicEditor,
+      Autosave,
+      BlockQuote,
+      Bold,
+      Essentials,
+      FullPage,
+      GeneralHtmlSupport,
+      Heading,
+      HtmlComment,
+      HtmlEmbed,
+      Indent,
+      IndentBlock,
+      Italic,
+      Link,
+      Paragraph,
+      ShowBlocks,
+      SourceEditing,
+      SpecialCharacters,
+      Table,
+      TableCaption,
+      TableCellProperties,
+      TableColumnResize,
+      TableProperties,
+      TableToolbar,
+      TextPartLanguage,
+      Title,
+      Underline,
+      WordCount,
+    } = cloud.CKEditor;
+
     return {
+      ClassicEditor,
       editorConfig: {
         toolbar: {
           items: [
+            "sourceEditing",
+            "showBlocks",
+            "textPartLanguage",
+            "|",
             "heading",
             "|",
             "bold",
@@ -58,6 +73,7 @@ export default function ClassicCKEditor({ onChange }) {
             "link",
             "insertTable",
             "blockQuote",
+            "htmlEmbed",
             "|",
             "outdent",
             "indent",
@@ -69,12 +85,18 @@ export default function ClassicCKEditor({ onChange }) {
           BlockQuote,
           Bold,
           Essentials,
+          FullPage,
+          GeneralHtmlSupport,
           Heading,
+          HtmlComment,
+          HtmlEmbed,
           Indent,
           IndentBlock,
           Italic,
           Link,
           Paragraph,
+          ShowBlocks,
+          SourceEditing,
           SpecialCharacters,
           Table,
           TableCaption,
@@ -82,7 +104,10 @@ export default function ClassicCKEditor({ onChange }) {
           TableColumnResize,
           TableProperties,
           TableToolbar,
+          TextPartLanguage,
+          Title,
           Underline,
+          WordCount,
         ],
         heading: {
           options: [
@@ -129,7 +154,17 @@ export default function ClassicCKEditor({ onChange }) {
             },
           ],
         },
-        language: "pl",
+        htmlSupport: {
+          allow: [
+            {
+              name: /^.*$/,
+              styles: true,
+              attributes: true,
+              classes: true,
+            },
+          ],
+        },
+        initialData: "",
         licenseKey: LICENSE_KEY,
         link: {
           addTargetToExternalLinks: true,
@@ -154,28 +189,45 @@ export default function ClassicCKEditor({ onChange }) {
             "tableCellProperties",
           ],
         },
-        translations: [translations],
       },
     };
-  }, [isLayoutReady]);
+  }, [cloud, isLayoutReady]);
 
   return (
-    <div className={classes.editorContainer}>
-      <div ref={editorContainerRef}>
-        <div>
+    <div className="main-container">
+      <div
+        className="editor-container editor-container_classic-editor editor-container_include-word-count"
+        ref={editorContainerRef}
+      >
+        <div className="editor-container__editor">
           <div ref={editorRef}>
-            {editorConfig && (
+            {ClassicEditor && editorConfig && (
               <CKEditor
-                editor={ClassicEditor}
-                config={editorConfig}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   onChange(data);
                 }}
+                onReady={(editor) => {
+                  const wordCount = editor.plugins.get("WordCount");
+                  editorWordCountRef.current.appendChild(
+                    wordCount.wordCountContainer
+                  );
+                }}
+                onAfterDestroy={() => {
+                  Array.from(editorWordCountRef.current.children).forEach(
+                    (child) => child.remove()
+                  );
+                }}
+                editor={ClassicEditor}
+                config={editorConfig}
               />
             )}
           </div>
         </div>
+        <div
+          className="editor_container__word-count"
+          ref={editorWordCountRef}
+        ></div>
       </div>
     </div>
   );
