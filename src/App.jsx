@@ -72,7 +72,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // { path: "not-authorized", element: <NotAuthorized /> },
       { path: "auth", element: <AuthPage />, action: authAction },
       { path: "logout", action: logoutAction },
     ],

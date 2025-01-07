@@ -5,7 +5,10 @@ import "./ClassicCKEditor.css";
 const LICENSE_KEY =
   "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjYxODg3OTksImp0aSI6IjhkYWE4ZDlhLTA2ZDItNDQ3OC05MThmLTYxOTdjNDZmMmRjMyIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiNTU5YmVmNzIifQ.a79MjSXAf5pL1xRhaxFcL3wQcKeXybwC2iFcGuoNn8oem-IJilA6zp6898z1sRXZafrN4wrusvFgSIFckdfdFA";
 
-export default function ClassicCKEditor({ onChange }) {
+export default function ClassicCKEditor({
+  onChange,
+  initialArticleContent = "",
+}) {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const editorWordCountRef = useRef(null);
@@ -105,7 +108,7 @@ export default function ClassicCKEditor({ onChange }) {
           TableProperties,
           TableToolbar,
           TextPartLanguage,
-          Title,
+          // Title,
           Underline,
           WordCount,
         ],
@@ -164,7 +167,7 @@ export default function ClassicCKEditor({ onChange }) {
             },
           ],
         },
-        initialData: "",
+        initialData: initialArticleContent,
         licenseKey: LICENSE_KEY,
         link: {
           addTargetToExternalLinks: true,

@@ -20,7 +20,7 @@ async function add(article, pool) {
   }
 }
 
-async function edit(article, pool) {
+async function edit(articleId, article, pool) {
   try {
     console.log("editing article");
     const result = await pool.query(
@@ -30,7 +30,7 @@ async function edit(article, pool) {
         article.subtitle,
         article.content,
         article.bannerUrl,
-        article.id,
+        articleId,
       ]
     );
     console.log("result article", result.rows[0]);

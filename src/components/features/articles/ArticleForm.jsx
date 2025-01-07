@@ -22,15 +22,36 @@ export default function ArticleForm({ inputData = null, onSubmit }) {
   return (
     <form className={classes.addForm} onSubmit={handleSubmit}>
       <label htmlFor="title">Tytuł:</label>
-      <input type="text" name="title" id="title" required />
+      <input
+        type="text"
+        name="title"
+        id="title"
+        defaultValue={inputData?.title || ""}
+        required
+      />
 
       <label htmlFor="subtitle">Podtytuł:</label>
-      <input type="text" name="subtitle" id="subtitle" required />
+      <input
+        type="text"
+        name="subtitle"
+        id="subtitle"
+        defaultValue={inputData?.subtitle || ""}
+        required
+      />
 
-      <label htmlFor="subtitle">Link Zdjęcia:</label>
-      <input type="text" name="bannerUrl" id="bannerUrl" required />
+      <label htmlFor="bannerUrl">Link Zdjęcia:</label>
+      <input
+        type="text"
+        name="bannerUrl"
+        id="bannerUrl"
+        defaultValue={inputData?.banner_url || ""}
+        required
+      />
 
-      <ClassicCKEditor onChange={setContent} />
+      <ClassicCKEditor
+        onChange={setContent}
+        initialArticleContent={inputData?.content || ""}
+      />
 
       <input type="submit" value="Dodaj" className={classes.submitBtn} />
     </form>

@@ -13,7 +13,7 @@ import { UserContext } from "../context/UserContext";
 
 function RootLayout() {
   const { hash, pathname } = useLocation();
-  const { user, fetchUser, loading, clearUser } = useContext(UserContext);
+  const { user, fetchUser, clearUser } = useContext(UserContext);
 
   const token = useLoaderData();
   const submit = useSubmit();
@@ -33,6 +33,7 @@ function RootLayout() {
     console.log("root token menagement and user data fetching.");
 
     if (!token) {
+      console.log("no token and no user");
       clearUser();
     }
 
@@ -44,6 +45,7 @@ function RootLayout() {
 
     console.log("checking if token is expired");
     if (token === "EXPIRED") {
+      console.log("token expired");
       submit(null, { action: "/logout", method: "post" });
       return;
     }
@@ -55,26 +57,11 @@ function RootLayout() {
     // fetch user data
     fetchUser(token);
 
-    console.log("fetchUser");
-    console.log("fetched user: ", user);
-
-    // (async () => {
-    //   setLoading(true);
-    //   const userData = await fetchUserData(token);
-    //   if (userData) {
-    //     updateUser(userData);
-    //   } else {
-    //     clearUser();
-    //   }
-    // })();
-
     // logout after token expiration
-    const logoutTimer = setTimeout(() => {
+    setTimeout(() => {
       submit(null, { action: "/logout", method: "post" });
     }, tokenDuration);
-
-    return () => clearTimeout(logoutTimer);
-  }, [token, submit, user, fetchUser]);
+  }, [token, submit, user, fetchUser, clearUser]);
 
   const showFooter = !pathname.startsWith("/auth");
 

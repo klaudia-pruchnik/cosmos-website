@@ -81,8 +81,6 @@ router.put(
     let errors = {};
 
     console.log("Edytowanie artykułu");
-    console.log(data.title);
-    console.log(data);
 
     if (!data) {
       return res.status(400).json({ message: "Article is required" });
@@ -119,7 +117,7 @@ router.put(
     }
 
     try {
-      const updatedArticle = await edit(data, req.app.locals.pool);
+      const updatedArticle = await edit(id, data, req.app.locals.pool);
 
       res.status(201).json({
         message: "Artykuł został edytowany.",

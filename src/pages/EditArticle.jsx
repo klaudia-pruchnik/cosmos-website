@@ -49,10 +49,11 @@ export default function AddNewArticle() {
   }
 
   if (data) {
+    console.log("data editArtcile", data);
     content = (
       <>
-        {state === "submitting" && <p>Wysyłanie...</p>}
         <ArticleForm onSubmit={handleSubmit} inputData={data} />
+        {state === "submitting" && <p>Wysyłanie...</p>}
         {actionData?.message && <p>{actionData.message}</p>}
         {actionData?.errors && (
           <ul>
