@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { add, edit, getArticles, getArticle } from "../data/articles.js";
+import {
+  add,
+  edit,
+  getArticles,
+  getArticle,
+  deleteArticle,
+} from "../data/articles.js";
 import { isValidText, isValidImageUrl } from "../util/validation.js";
 import { checkAuthMiddleware, checkAdminMiddleware } from "../util/auth.js";
 
@@ -168,5 +174,32 @@ router.get("/articles/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete(
+  "/articles/:id",
+  checkAuthMiddleware,
+  checkAdminMiddleware,
+  async (req, res, next) => {
+    console.log("deleting article");
+    console.log(req.params);
+    const { id } = req.params;
+
+    console.log("deleting article with id", id);
+
+    try {
+      const article = await getArticle(id, req.app.locals.pool);
+      if (!article) {
+        return res.status(404).json({ message: "article not found" });
+      }
+
+      await deleteArticle(id, req.app.locals.pool);
+
+      res.status(200).json({ message: "article deleted" });
+    } catch (error) {
+      console.log("error", error);
+      next(error);
+    }
+  }
+);
 
 export default router;

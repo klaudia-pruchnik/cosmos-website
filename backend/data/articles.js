@@ -68,4 +68,15 @@ async function getArticle(id, pool) {
   }
 }
 
-export { add, edit, getArticles, getArticle };
+async function deleteArticle(id, pool) {
+  try {
+    const result = await pool.query("DELETE FROM articles WHERE id = $1", [id]);
+    console.log("deleting article in db result: ", result);
+    return result;
+  } catch (error) {
+    console.error("Error deleting article:", error);
+    throw error;
+  }
+}
+
+export { add, edit, getArticles, getArticle, deleteArticle };

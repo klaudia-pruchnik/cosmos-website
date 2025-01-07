@@ -16,7 +16,7 @@ export default function AddNewArticle() {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createNewArticle,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["articles"] });
       navigate("/articles");
     },
   });

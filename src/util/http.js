@@ -113,6 +113,38 @@ export async function updateArticle({ id, article }) {
   return response.json();
 }
 
+export async function deleteArticle(id) {
+  const token = getAuthToken();
+
+  console.log("deleting article id", id);
+
+  const response = await fetch(`http://localhost:8080/articles/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log("response from http.js deleteArticle", response);
+
+  if (!response.ok) {
+    console.log("response from http.js delete not ok");
+    const errorData = await response.json();
+    console.log(errorData);
+    const error = new Error(
+      errorData.message || "Wystąpił błąd podczas usuwania artykułu."
+    );
+    error.code = response.status;
+    error.info = errorData;
+    console.log("error z http info", error.info);
+    throw error;
+  }
+
+  console.log("response from http.js delete ok");
+
+  return response.json();
+}
+
 export async function fetchUserData(token) {
   try {
     const response = await fetch("http://localhost:8080/user", {
