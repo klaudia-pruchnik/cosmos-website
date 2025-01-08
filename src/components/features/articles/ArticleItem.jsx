@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-// import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import classes from "./ArticleItem.module.css";
 
 export default function ArticleItem({ article }) {

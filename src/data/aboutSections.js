@@ -6,12 +6,12 @@ export const ABOUT_SECTIONS = [
   },
   {
     id: 1,
-    image: "assets/round-abstract-wave.png",
+    image: "/src/assets/round-abstract-wave.png",
     altText: "abstract wave",
   },
   {
     id: 2,
-    image: "assets/round-abstract-flower.png",
+    image: "/src/assets/round-abstract-flower.png",
     altText: "abstract flower",
   },
   {

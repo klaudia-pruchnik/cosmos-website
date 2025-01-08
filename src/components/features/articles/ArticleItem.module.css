@@ -8,10 +8,20 @@
   width: 100%;
   margin-bottom: 10px;
   display: block;
+  overflow: hidden;
 }
+.boxContainer:hover .articleImage {
+  transform: scale(2);
+}
+
 .articleImage {
   object-fit: cover;
   width: 100%;
   height: 100%;
   filter: grayscale(100%);
+  transition: transform 4s ease-out;
+}
+
+.boxContainer:hover h4 {
+  color: #ffffffbc;
 }
