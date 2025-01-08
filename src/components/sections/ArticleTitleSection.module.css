@@ -14,19 +14,16 @@
   font-size: 1.85rem;
   line-height: 1.3;
 }
-.articleBanner,
-.articleTitleBg {
+.articleBanner {
   position: absolute;
   top: 0;
   left: 0;
-}
-.articleTitleBg {
-  z-index: -2;
-  background-color: #000;
-}
-.articleBanner {
   object-fit: cover;
   z-index: -1;
+  width: 100%;
+  height: 440px;
+  overflow: hidden;
+  filter: grayscale(100%);
 }
 .metadata {
   text-align: right;

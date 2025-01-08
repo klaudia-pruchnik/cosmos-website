@@ -1,14 +1,20 @@
 import { Link } from "react-router-dom";
+// import { motion } from "framer-motion";
 import classes from "./ArticleItem.module.css";
 
 export default function ArticleItem({ article }) {
-  console.log("article", article);
   return (
     <Link
       to={`/articles/${article.id}`}
       className={`col-lg-4 col-md-6 ${classes.boxContainer}`}
     >
-      <div className={classes.boxImage}></div>
+      <div className={classes.boxImage}>
+        <img
+          className={classes.articleImage}
+          src={article.banner_url}
+          alt={article.title}
+        />
+      </div>
       <h4>{article.title}</h4>
     </Link>
   );
