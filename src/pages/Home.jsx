@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <HeroSection
-        videoSrc="assets/title-vid.mp4"
+        videoSrc="https://i.imgur.com/jdZpVz5.mp4"
         title="Odkryj Świat"
         subtitle="Wyrusz w fascynującą podróż po mikro- i makrokosmosie"
         linkTarget="#section-articles"
