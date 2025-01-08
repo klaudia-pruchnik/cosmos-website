@@ -2,7 +2,12 @@
   margin-top: 60px;
   max-width: 570px;
 }
+
+.socialIconsContainer a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .socialIcon {
-  width: 90px;
-  margin-bottom: 48px;
+  font-size: 4rem;
 }

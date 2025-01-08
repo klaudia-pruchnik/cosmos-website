@@ -1,19 +1,88 @@
 import FluidContainer from "../layout/FluidContainer";
-import { DUMMY_ICONS } from "../../data/socialMediaIcons";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
 import classes from "./SocialMediaSection.module.css";
+
+const SOCIAL_ICONS = [
+  {
+    id: 1,
+    icon: FaFacebook,
+    href: "https://www.facebook.com",
+  },
+  {
+    id: 2,
+    icon: FaInstagram,
+    href: "https://www.instagram.com",
+  },
+  {
+    id: 3,
+    icon: FaLinkedinIn,
+    href: "https://www.linkedin.com",
+  },
+  {
+    id: 4,
+    icon: FaTwitter,
+    href: "https://www.twitter.com",
+  },
+];
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const iconVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.5,
+    y: 50,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+    },
+  },
+};
 
 export default function SocialMediaSection({ titleText }) {
   return (
     <FluidContainer sectionId="section-social-media">
       <h2>{titleText}</h2>
       <div className={`row ${classes.socialIconsContainer}`}>
-        {DUMMY_ICONS.map((icon) => {
+        {SOCIAL_ICONS.map(({ id, icon: Icon, href }) => {
           return (
-            <div className="col-md-3 col-sm-6" key={icon.id}>
-              <a href={icon.href}>
-                <img src={icon.src} className={classes.socialIcon} />
+            <motion.div
+              className="col-md-3 col-sm-6"
+              key={id}
+              whileHover={{ scale: 1.2 }}
+              transition={{
+                type: "spring",
+                stiffness: 250,
+                damping: 10,
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <a href={href} target="_blank" rel="noreferrer">
+                <Icon className={classes.socialIcon} />
               </a>
-            </div>
+            </motion.div>
           );
         })}
       </div>
