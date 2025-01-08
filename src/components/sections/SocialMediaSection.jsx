@@ -31,36 +31,6 @@ const SOCIAL_ICONS = [
   },
 ];
 
-const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const iconVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.5,
-    y: 50,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-};
-
 export default function SocialMediaSection({ titleText }) {
   return (
     <FluidContainer sectionId="section-social-media">

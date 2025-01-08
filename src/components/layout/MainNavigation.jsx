@@ -53,7 +53,7 @@ export default function MainNavigation() {
               <NavLink
                 className={`nav-link ${classes.mainNavLink} ${({ isActive }) =>
                   isActive ? classes.active : undefined}}`}
-                to="/"
+                to="/contact"
               >
                 Kontakt
               </NavLink>
