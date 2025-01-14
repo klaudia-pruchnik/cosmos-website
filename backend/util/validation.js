@@ -31,4 +31,25 @@ const validateArticle = async (data, pool) => {
   return errors;
 };
 
+export const validateSignupData = async (data, pool) => {
+  let errors = {};
+
+  // validate username >= 3 chars
+  if (!isValidText(data.username, 3)) {
+    errors.username = "Nazwa użytkownika powinna mieć co najmniej 3 znaki.";
+  } else {
+    const existingUser = await get(data.username, pool);
+    if (existingUser) {
+      errors.username = "Taki użytkownik już istnieje.";
+    }
+  }
+
+  // password validation > 6 chars
+  if (!isValidText(data.password, 6)) {
+    errors.password = "Błędne hasło. Powinno mieć co najmniej 6 znaków.";
+  }
+
+  return errors;
+};
+
 export { isValidText, isValidImageUrl, validateArticle };
