@@ -12,7 +12,11 @@ class NotAuthError {
   }
 }
 
-const _NotFoundError = NotFoundError;
-export { _NotFoundError as NotFoundError };
-const _NotAuthError = NotAuthError;
-export { _NotAuthError as NotAuthError };
+// route handlers
+const handleValidationErrors = (errors, res, message) => {
+  if (Object.keys(errors).length > 0) {
+    return res.status(422).json({ message, errors });
+  }
+};
+
+export { NotFoundError, NotAuthError, handleValidationErrors };

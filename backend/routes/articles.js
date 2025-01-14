@@ -6,7 +6,8 @@ import {
   getArticle,
   deleteArticle,
 } from "../data/articles.js";
-import { isValidText, isValidImageUrl } from "../util/validation.js";
+import { validateArticle } from "../util/validation.js";
+import { handleValidationErrors } from "../util/errors.js";
 import { checkAuthMiddleware, checkAdminMiddleware } from "../util/auth.js";
 
 const router = Router();
@@ -16,61 +17,19 @@ router.post(
   checkAuthMiddleware,
   checkAdminMiddleware,
   async (req, res, next) => {
-    const data = req.body.article;
-    let errors = {};
-
-    console.log("Dodawanie artykułu");
-    console.log(data.title);
-    console.log(data);
-
-    console.log("Walidacja danych");
-    // validate article >= 2 chars
-    if (!isValidText(data.title, 2)) {
-      console.log("Tytuł artykułu powinien mieć co najmniej 2 znaki");
-      errors.title = "Tytuł artykułu powinien mieć co najmniej 2 znaki.";
-    } else {
-      console.log("tu bedzie sprawdzenie czy taki artykul juz instnieje");
-      // try {
-      //   console.log("sprawdzam czy istnieje");
-      //   const existingArticle = await get(data.title, req.app.locals.pool);
-      //   if (existingArticle) {
-      //     errors.title = "Artykuł z takim tytułem już istnieje.";
-      //   }
-      // } catch (error) {
-      //   console.log("errory", error);
-      //   next(error); // error capturing
-      // }
-    }
-
-    // banner url validation
-    if (!isValidImageUrl(data.bannerUrl)) {
-      console.log("Niepoprawny adres URL.");
-      errors.banner_url = "Niepoprawny adres URL.";
-    }
-
-    // content validation >= 100 chars
-    if (!isValidText(data.content, 100)) {
-      console.log("za krotki artykul");
-      errors.content = "Treść artykułu powinna mieć co najmniej 100 znaków.";
-    }
-
-    // validation errors
-    if (Object.keys(errors).length > 0) {
-      console.log("Wystapily bledy walidacji");
-      return res.status(422).json({
-        message:
-          "Dodawanie artykułu nie powiodło się z powodu błędów walidacji.",
-        errors,
-      });
-    }
-
+    const { article: data } = req.body;
     try {
-      const createdArticle = await add(data, req.app.locals.pool);
+      const errors = await validateArticle(data, req.app.locals.pool);
+      handleValidationErrors(
+        errors,
+        res,
+        "Dodawanie artykułu nie powiodło się z powodu błędów walidacji."
+      );
 
-      res.status(201).json({
-        message: "Artykuł dodany do bazy.",
-        article: createdArticle,
-      });
+      const createdArticle = await add(data, req.app.locals.pool);
+      res
+        .status(201)
+        .json({ message: "Artykuł dodany do bazy.", article: createdArticle });
     } catch (error) {
       next(error);
     }
@@ -83,49 +42,18 @@ router.put(
   checkAdminMiddleware,
   async (req, res, next) => {
     const { id } = req.params;
-    const data = req.body.article;
-    let errors = {};
-
-    console.log("Edytowanie artykułu");
-
-    if (!data) {
-      return res.status(400).json({ message: "Article is required" });
-    }
-
-    console.log("Walidacja danych");
-    // validate article >= 2 chars
-    if (!isValidText(data.title, 2)) {
-      console.log("Tytuł artykułu powinien mieć co najmniej 2 znaki");
-      errors.title = "Tytuł artykułu powinien mieć co najmniej 2 znaki.";
-    } else {
-      console.log("tu bedzie sprawdzenie czy taki artykul juz instnieje");
-    }
-
-    // banner url validation
-    if (!isValidImageUrl(data.bannerUrl)) {
-      console.log("Niepoprawny adres URL.");
-      errors.banner_url = "Niepoprawny adres URL.";
-    }
-
-    // content validation >= 100 chars
-    if (!isValidText(data.content, 100)) {
-      console.log("za krotki artykul");
-      errors.content = "Treść artykułu powinna mieć co najmniej 100 znaków.";
-    }
-
-    // validation errors
-    if (Object.keys(errors).length > 0) {
-      console.log("Wystapily bledy walidacji");
-      return res.status(422).json({
-        message: "Edycja artykułu nie powiodła się z powodu błędów walidacji.",
-        errors,
-      });
-    }
+    const { article: data } = req.body;
 
     try {
-      const updatedArticle = await edit(id, data, req.app.locals.pool);
+      const errors = await validateArticle(data, req.app.locals.pool);
+      handleValidationErrors(
+        errors,
+        res,
+        "Edycja artykułu nie powiodła się z powodu błędów walidacji."
+      );
 
-      res.status(201).json({
+      const updatedArticle = await edit(id, data, req.app.locals.pool);
+      res.status(200).json({
         message: "Artykuł został edytowany.",
         article: updatedArticle,
       });
@@ -139,18 +67,10 @@ router.get("/articles", async (req, res, next) => {
   const limit = parseInt(req.query.limit) || 6;
   const offset = parseInt(req.query.offset) || 0;
 
-  console.log("limit, offset", limit, offset);
-
   try {
     const articles = await getArticles(limit, offset, req.app.locals.pool);
-
-    console.log("articles", articles);
-    res.status(200).json({
-      articles,
-      hasMore: articles.length === limit,
-    });
+    res.status(200).json({ articles, hasMore: articles.length === limit });
   } catch (error) {
-    console.log("error", error);
     next(error);
   }
 });
@@ -158,19 +78,13 @@ router.get("/articles", async (req, res, next) => {
 router.get("/articles/:id", async (req, res, next) => {
   const { id } = req.params;
 
-  console.log("getting article with id", id);
-
   try {
     const article = await getArticle(id, req.app.locals.pool);
-
     if (!article) {
-      return res.status(404).json({ message: "article not found" });
+      return res.status(404).json({ message: "Artykuł nie znaleziony." });
     }
-
-    console.log("fetched article: ", article);
     res.status(200).json(article);
   } catch (error) {
-    console.log("error", error);
     next(error);
   }
 });
@@ -180,23 +94,17 @@ router.delete(
   checkAuthMiddleware,
   checkAdminMiddleware,
   async (req, res, next) => {
-    console.log("deleting article");
-    console.log(req.params);
     const { id } = req.params;
-
-    console.log("deleting article with id", id);
 
     try {
       const article = await getArticle(id, req.app.locals.pool);
       if (!article) {
-        return res.status(404).json({ message: "article not found" });
+        return res.status(404).json({ message: "Artykuł nie znaleziony." });
       }
 
       await deleteArticle(id, req.app.locals.pool);
-
-      res.status(200).json({ message: "article deleted" });
+      res.status(200).json({ message: "Artykuł usunięty." });
     } catch (error) {
-      console.log("error", error);
       next(error);
     }
   }
