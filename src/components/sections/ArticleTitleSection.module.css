@@ -8,7 +8,8 @@
   font-weight: 300;
   margin-bottom: 25px;
 }
-.section h3 {
+.section h2 {
+  font-family: "Inter", sans-serif;
   max-width: 570px;
   font-weight: 300;
   font-size: 1.85rem;
@@ -24,6 +25,7 @@
   height: 440px;
   overflow: hidden;
   filter: grayscale(100%);
+  opacity: 0.6;
 }
 .metadata {
   text-align: right;
@@ -38,4 +40,13 @@
 .date {
   display: inline-block;
   margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .section h1 {
+    font-size: 4.5rem;
+  }
+  .section h2 {
+    font-size: 1.5rem;
+  }
 }

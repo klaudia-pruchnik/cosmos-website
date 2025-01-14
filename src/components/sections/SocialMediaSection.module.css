@@ -11,3 +11,18 @@
 .socialIcon {
   font-size: 4rem;
 }
+
+/* Phone */
+@media (max-width: 767.98px) {
+  .socialIconsContainer {
+    justify-content: center;
+  }
+  .socialIconContainer {
+    display: flex;
+    justify-content: center;
+    max-width: 300px;
+  }
+  .socialIcon {
+    margin-bottom: 40px;
+  }
+}

@@ -17,17 +17,17 @@ export default function MainNavigation() {
         <NavLink className={`navbar-brand ${classes.mainNavbarBrand}`} to="/">
           COSMOS
         </NavLink>
-        {/* <button
-          classNameName="navbar-toggler"
+        <button
+          className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarMenu"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarMenu"
           aria-controls="navbarMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
-        </button> */}
+        </button>
 
         <div className="collapse navbar-collapse" id="navbarMenu">
           <ul className="navbar-nav ms-auto">

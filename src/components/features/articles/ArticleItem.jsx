@@ -15,7 +15,7 @@ export default function ArticleItem({ article }) {
           alt={article.title}
         />
       </div>
-      <h4>{article.title}</h4>
+      <h3>{article.title}</h3>
     </Link>
   );
 }

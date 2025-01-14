@@ -12,7 +12,7 @@ export default function HeroSection({ videoSrc, title, subtitle, linkTarget }) {
         </video>
 
         <h1>{title}</h1>
-        <h3>{subtitle}</h3>
+        <h2>{subtitle}</h2>
 
         <a href={linkTarget}>
           <img src={arrowIcon} />

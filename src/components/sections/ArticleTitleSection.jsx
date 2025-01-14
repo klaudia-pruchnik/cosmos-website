@@ -19,7 +19,7 @@ export default function ArticleTitleSection({
         <img src={image} alt={altText} className={classes.articleBanner} />
 
         <h1>{title}</h1>
-        <h3>{subtitle}</h3>
+        <h2>{subtitle}</h2>
       </FluidContainer>
 
       <div className={classes.metadata}>

@@ -20,6 +20,9 @@ h2,
 h3,
 h4 {
   text-transform: uppercase;
+  hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 h1,

@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-
-// import { createNewArticle } from "../../util/http.js";
-// import { queryClient } from "../../util/http.js";
 import { createNewArticle, queryClient } from "../util/http";
 import { UserContext } from "../context/UserContext";
 
+import FluidContainer from "../components/layout/FluidContainer";
 import ArticleForm from "../components/features/articles/ArticleForm";
+import classes from "./AddNewArticle.module.css";
+import commonClasses from "./CommonStyles.module.css";
 
 export default function AddNewArticle() {
   const navigate = useNavigate();
@@ -30,22 +30,27 @@ export default function AddNewArticle() {
   }
 
   return (
-    <div className="container">
-      <h1>Nowy artykuł</h1>
-      <ArticleForm onSubmit={handleSubmit} />
-      {isPending && <p>Wysyłanie...</p>}
-      {isError && (
-        <>
-          <p>{error.message}</p>
-          {error.info.errors && (
-            <ul>
-              {Object.entries(error.info.errors).map(([key, value]) => (
-                <li key={key}>{value}</li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
-    </div>
+    <section>
+      <h1 className={commonClasses.pageHeading}>Dodaj nowy artykuł</h1>
+      <FluidContainer
+        sectionId="section-add-article"
+        addedClasses={classes.addArticleContainer}
+      >
+        <ArticleForm onSubmit={handleSubmit} />
+        {isPending && <p>Wysyłanie...</p>}
+        {isError && (
+          <>
+            <p>{error.message}</p>
+            {error.info.errors && (
+              <ul>
+                {Object.entries(error.info.errors).map(([key, value]) => (
+                  <li key={key}>{value}</li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+      </FluidContainer>
+    </section>
   );
 }

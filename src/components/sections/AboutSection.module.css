@@ -7,3 +7,16 @@
 .image {
   align-self: center;
 }
+.aboutBoxContainer h3 {
+  font-size: 1.25rem;
+  text-transform: none;
+  font-weight: 500;
+}
+@media (max-width: 768px) {
+  .aboutBoxContainer:nth-child(4n-1) {
+    order: 2;
+  }
+  .aboutBoxContainer:nth-child(4n) {
+    order: 1;
+  }
+}

@@ -39,7 +39,7 @@ export default function SocialMediaSection({ titleText }) {
         {SOCIAL_ICONS.map(({ id, icon: Icon, href }) => {
           return (
             <motion.div
-              className="col-md-3 col-sm-6"
+              className={`col-md-3 col-sm-6 ${classes.socialIconContainer}`}
               key={id}
               whileHover={{ scale: 1.2 }}
               transition={{

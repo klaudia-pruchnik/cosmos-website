@@ -6,11 +6,11 @@ export default function FluidContainer({
   children,
 }) {
   return (
-    <div
+    <section
       className={`container-fluid ${classes.fluidContainer} ${addedClasses}`}
       id={sectionId}
     >
       {children}
-    </div>
+    </section>
   );
 }

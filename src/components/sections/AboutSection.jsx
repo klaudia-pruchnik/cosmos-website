@@ -20,7 +20,7 @@ export default function AboutSection({ title }) {
               />
             ) : (
               <>
-                <h5>{section.header}</h5>
+                <h3>{section.header}</h3>
                 <p>{section.text}</p>
               </>
             )}

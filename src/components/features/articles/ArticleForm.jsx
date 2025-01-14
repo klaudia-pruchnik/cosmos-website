@@ -48,12 +48,17 @@ export default function ArticleForm({ inputData = null, onSubmit }) {
         required
       />
 
+      <label htmlFor="content">Treść:</label>
       <ClassicCKEditor
         onChange={setContent}
         initialArticleContent={inputData?.content || ""}
       />
 
-      <input type="submit" value="Dodaj" className={classes.submitBtn} />
+      <input
+        type="submit"
+        value="Dodaj"
+        className={`btn btn-outline-light ${classes.submitBtn}`}
+      />
     </form>
   );
 }
