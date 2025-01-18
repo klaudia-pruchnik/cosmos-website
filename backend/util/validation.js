@@ -1,4 +1,5 @@
 import { getArticleByTitle } from "../data/articles.js";
+import { get } from "../data/user.js";
 
 function isValidText(value, minLength = 1) {
   return value && value.trim().length >= minLength;
