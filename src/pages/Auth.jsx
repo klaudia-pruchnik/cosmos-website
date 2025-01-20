@@ -57,13 +57,12 @@ export async function action({ request }) {
 
   // sign up password confirmation
   if (mode === "signup" && authData.password !== authData.password2) {
-    throw new Response(
-      JSON.stringify({ errors: { password2: "Hasła muszą być identyczne." } }),
-      {
-        status: 422,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    console.log("passwords do not match");
+    return {
+      errors: {
+        password2: "Hasła muszą być identyczne.",
+      },
+    };
   }
 
   const response = await fetch("http://localhost:8080/" + mode, {
