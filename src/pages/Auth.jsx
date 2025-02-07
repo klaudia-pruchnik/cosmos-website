@@ -1,7 +1,7 @@
 import { redirect, Link, useSearchParams } from "react-router-dom";
 
-import AuthForm from "../components/features/auth/AuthForm";
-import AnimationFollowingImage from "../components/features/animations/AnimationFollowImage";
+import AuthForm from "../components/auth/AuthForm";
+import AnimationFollowingImage from "../components/animations/AnimationFollowImage";
 import classes from "./Auth.module.css";
 
 export default function Auth() {

@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchArticle, queryClient, updateArticle } from "../util/http";
 import { UserContext } from "../context/UserContext";
 
-import ArticleForm from "../components/features/articles/ArticleForm";
+import ArticleForm from "../components/articles/ArticleForm";
 import FluidContainer from "../components/layout/FluidContainer";
 import classes from "./AddNewArticle.module.css";
 

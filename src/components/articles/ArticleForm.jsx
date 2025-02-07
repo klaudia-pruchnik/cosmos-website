@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 
 import classes from "./ArticleForm.module.css";
 import ClassicCKEditor from "../ClassicCKEditor.jsx";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 export default function ArticleForm({ inputData = null, onSubmit }) {
   const [content, setContent] = useState(""); // CKEditor content

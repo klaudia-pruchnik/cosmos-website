@@ -5,7 +5,7 @@ import { createNewArticle, queryClient } from "../util/http";
 import { UserContext } from "../context/UserContext";
 
 import FluidContainer from "../components/layout/FluidContainer";
-import ArticleForm from "../components/features/articles/ArticleForm";
+import ArticleForm from "../components/articles/ArticleForm";
 import classes from "./AddNewArticle.module.css";
 import commonClasses from "./CommonStyles.module.css";
 

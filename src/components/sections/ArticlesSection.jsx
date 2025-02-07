@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import ArticleItem from "../features/articles/ArticleItem";
+import ArticleItem from "../articles/ArticleItem";
 import FluidContainer from "../layout/FluidContainer";
 import { fetchArticles } from "../../util/http";
 
