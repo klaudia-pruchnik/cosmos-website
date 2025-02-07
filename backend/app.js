@@ -45,6 +45,4 @@ app.use((error, req, res, next) => {
 // server start
 app.listen(PORT, () => {
   console.log(`Backend działa na http://localhost:${PORT}`);
-  console.log("DATABASE_URL:", process.env.DATABASE_URL);
-  console.log("JWT_KEY:", process.env.JWT_KEY);
 });

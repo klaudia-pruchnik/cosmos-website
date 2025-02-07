@@ -85,10 +85,10 @@ export default function Article() {
               className="btn btn-outline-light my-3"
               onClick={handleDelete}
             >
-              Delete
+              Usuń
             </button>
             <Link to="edit" className="btn btn-outline-light my-3 mx-2">
-              Edit
+              Edytuj
             </Link>
           </div>
         )}

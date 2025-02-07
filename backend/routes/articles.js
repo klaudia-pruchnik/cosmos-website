@@ -45,7 +45,7 @@ router.put(
     const { article: data } = req.body;
 
     try {
-      const errors = await validateArticle(data, req.app.locals.pool);
+      const errors = await validateArticle(data, req.app.locals.pool, id);
       handleValidationErrors(
         errors,
         res,

@@ -9,7 +9,7 @@ function isValidImageUrl(value) {
   return value && value.startsWith("http");
 }
 
-const validateArticle = async (data, pool) => {
+const validateArticle = async (data, pool, articleId = null) => {
   let errors = {};
 
   if (!isValidText(data.title, 2)) {
@@ -17,7 +17,11 @@ const validateArticle = async (data, pool) => {
   } else {
     const existingArticle = await getArticleByTitle(data.title, pool);
     if (existingArticle && existingArticle.length > 0) {
-      errors.title = "Artykuł z takim tytułem już istnieje.";
+      const foundArticle = existingArticle[0];
+
+      if (!articleId || foundArticle.id != articleId) {
+        errors.title = "Artykuł z takim tytułem już istnieje.";
+      }
     }
   }
 

@@ -1,6 +1,8 @@
 .section {
-  overflow: hidden;
-  height: 440px;
+  position: relative;
+  /* overflow: hidden; */
+  min-height: 440px;
+  height: auto;
   padding: 5% 8%;
 }
 .section h1 {
@@ -10,22 +12,23 @@
 }
 .section h2 {
   font-family: "Inter", sans-serif;
-  max-width: 570px;
+  max-width: 610px;
   font-weight: 300;
   font-size: 1.85rem;
   line-height: 1.3;
 }
 .articleBanner {
   position: absolute;
-  top: 0;
+  top: -65px;
   left: 0;
   object-fit: cover;
   z-index: -1;
   width: 100%;
-  height: 440px;
+  min-height: 490px;
+  height: calc(100% + 65px);
   overflow: hidden;
   filter: grayscale(100%);
-  opacity: 0.6;
+  opacity: 0.3;
 }
 .metadata {
   text-align: right;
@@ -33,7 +36,7 @@
   color: #ffffff9c;
   font-size: 1.2rem;
   padding-right: 2%;
-  background-color: #141414;
+  background-color: #0e0e0e;
   padding-top: 10px;
 }
 .author,
