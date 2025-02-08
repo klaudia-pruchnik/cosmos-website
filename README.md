@@ -63,5 +63,20 @@ Once the backend and frontend are running, open your browser and go to:
 to access the frontend.
 The backend API runs on:
 `http://localhost:8080`
-    
+
+## **Technologies Used**
+
+### **Frontend**
+- React.js
+- React Router
+- TanStack Query
+- CSS Modules
+### **Backend**
+- Node.js
+- Express.js
+- PostgreSQL
+- JWT authentication
+
+## **Licence**
+This project is licensed under the MIT License.
   
