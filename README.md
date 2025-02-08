@@ -16,15 +16,22 @@ This project consists of:
 - Browse scientific articles about quantum physics and cosmology.
 - View article details, including author and publication date.
 
+![Homepage](docs/screenshots/homepage.gif)
+
 ### **Authentication & Authorization**
 - **User authentication** using JWT tokens.
 - **Admin access control**: Only admins can add, edit, or delete articles.
 - **Secure login & signup** process with password hashing.
 
+![Login Animation](docs/screenshots/login-animation.gif)
+
 ### **Article Management**
 - **Create new articles** (admin only).
 - **Edit existing articles** (admin only).
 - **Delete articles** (admin only).
+
+![Article View](docs/screenshots/article-view.png)
+![Admin Add Article](docs/screenshots/admin-add-article.png)
 
 ### **Performance & API**
 - Optimized API with pagination support for fetching articles.
