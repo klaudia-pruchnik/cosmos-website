@@ -31,7 +31,7 @@ This project consists of:
 - **Delete articles** (admin only).
 
 ![Article View](docs/screenshots/article-view.png)
-![Admin Add Article](docs/screenshots/admin-add-article.png)
+![Admin Add Article](docs/screenshots/admin-panel-add-article.png)
 
 ### **Performance & API**
 - Optimized API with pagination support for fetching articles.
