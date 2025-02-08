@@ -46,8 +46,11 @@ This project consists of:
 ### **4. Configure Environment Variables**
   Create a `.env` file inside the `backend/` directory:
   `cd backend`
-    `touch .env  # For Linux/Mac`
-    `echo. > .env  # For Windows`
+  
+    `touch .env` For Linux/Mac
+    
+    `echo. > .env` For Windows
+    
   Add the following content:
     `DATABASE_URL=postgresql://restricted_user:securepassword@ep-steep-shape-a2i8vju3.eucentral-1.aws.neon.tech/cosmos_db?sslmode=require
     JWT_KEY=your_secret_key`
@@ -59,7 +62,6 @@ This connection string allows users to register, log in, and read articles but d
 Once the backend and frontend are running, open your browser and go to:
 `http://localhost:5173` 
 to access the frontend.
-
 The backend API runs on:
 `http://localhost:8080`
     
