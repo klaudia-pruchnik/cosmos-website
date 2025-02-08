@@ -58,7 +58,7 @@ This project consists of:
     `echo. > .env` For Windows
     
   Add the following content:
-    `DATABASE_URL=postgresql://restricted_user:securepassword@ep-steep-shape-a2i8vju3.eucentral-1.aws.neon.tech/cosmos_db?sslmode=require
+    `DATABASE_URL=postgresql://restricted_user:!p2As565sWo!r32D@ep-steep-shape-a2i8vju3.eucentral-1.aws.neon.tech/cosmos_db?sslmode=require
     JWT_KEY=your_secret_key`
     
   ⚠️ Important: The DATABASE_URL is required to run the application.
